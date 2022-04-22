@@ -1,1 +1,1 @@
-web: python manage.py runserver 8081
+web: gunicorn JapaneseCultureStudyingWeb.wsgi --log-file -
