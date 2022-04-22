@@ -56,11 +56,6 @@ class Content(models.Model):
     description = models.TextField(null=False, blank=False, default="Udating")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    publisher = models.ManyToManyField(
-        Publisher, blank=False, null=False, related_name="contents")
-    categories = models.ManyToManyField(Category,
-                                        blank=False, null=False,
-                                        related_name="categories")
 
     publication_date = models.IntegerField(default="2022",
                                            null=False,
@@ -73,11 +68,11 @@ class Content(models.Model):
                               choices=STATUS_CHOICE,
                               null=True)
     # Foreign Field
-    author = models.ManyToManyField(Author,
-                                    related_name="contents")
-    publisher = models.ManyToManyField(Publisher,
-                                       related_name="contents")
-    categories = models.ManyToManyField(Category)
+    authors = models.ManyToManyField(Author,
+                                    related_name="contents", blank=False,)
+    publishers = models.ManyToManyField(Publisher,
+                                       related_name="contents", blank=False,)
+    categories = models.ManyToManyField(Category, related_name="contents", blank=False,)
     # Embedded Field
     # comments = models.EmbeddedField(model_container="Comment")
 

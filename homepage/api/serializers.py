@@ -43,7 +43,7 @@ class PublisherCreateSerializer(serializers.ModelSerializer):
         model = Publisher
         fields = "__all__"
         
-class PublisherRetrieveSerialzier(serializers.ModelSerializer):
+class PublisherRetrieveSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Publisher
@@ -56,6 +56,9 @@ class ContentSeriesCreateSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class ContentSeriesRetrieveSerializer(serializers.ModelSerializer):
+    authors = serializers.StringRelatedField(many=True)
+    categories = serializers.StringRelatedField(many=True)
+    publishers = serializers.StringRelatedField(many=True)
     
     class Meta:
         model = ContentSeries

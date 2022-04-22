@@ -25,7 +25,11 @@ class AuthorListCreateAPIView(generics.ListCreateAPIView):
                 detail = AuthorRetrieveSerializer(latest_author)
                 return Response(detail.data, status=status.HTTP_201_CREATED)
             return Response(detail.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
+class AuthorDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Author.objects.all()
+    serializer_class = AuthorRetrieveSerializer
+   
 class CategoryListCreateAPIView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoryCreateSerializer
@@ -45,13 +49,17 @@ class CategoryListCreateAPIView(generics.ListCreateAPIView):
                 return Response(detail.data, status=status.HTTP_201_CREATED)
             return Response(detail.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class CategoryDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategoryRetrieveSerializer
+
 class PublisherListCreateAPIView(generics.ListCreateAPIView):
     queryset = Publisher.objects.all()
     serializer_class = PublisherCreateSerializer
 
     def list(self, request, format=None):
         queryset = Publisher.objects.all()
-        serializer = PublisherRetrieveSerialzier(queryset,
+        serializer = PublisherRetrieveSerializer(queryset,
                                               many=True)
         return Response(serializer.data)
 
@@ -60,10 +68,13 @@ class PublisherListCreateAPIView(generics.ListCreateAPIView):
             if serializer.is_valid():
                 serializer.save()
                 latest_author = Publisher.objects.last()
-                detail = PublisherRetrieveSerialzier(latest_author)
+                detail = PublisherRetrieveSerializer(latest_author)
                 return Response(detail.data, status=status.HTTP_201_CREATED)
             return Response(detail.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class PublisherDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Publisher.objects.all()
+    serializer_class = PublisherRetrieveSerializer
 
 class ContentListCreateAPIView(generics.ListCreateAPIView):
 
@@ -84,3 +95,7 @@ class ContentListCreateAPIView(generics.ListCreateAPIView):
             detail = ContentRetrieveSerializer(latest_content)
             return Response(detail.data, status=status.HTTP_201_CREATED)
         return Response(detail.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ContentDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Content.objects.all()
+    serializer_class = ContentRetrieveSerializer
