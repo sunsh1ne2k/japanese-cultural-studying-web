@@ -1,1 +1,1 @@
-web: gunicorn JapaneseCultureStudyingWeb.wsgi
+web: gunicorn JapaneseCultureStudyingWeb.wsgi --log-file -
