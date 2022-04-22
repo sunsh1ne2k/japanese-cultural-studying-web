@@ -7,9 +7,12 @@ urlpatterns = [
          name='author-list'),
     
     path('authors/<int:pk>', 
-         AuthorListCreateAPIView.as_view(), 
+         AuthorDetailAPIView.as_view(), 
          name='author-detail'),
-    path('categories', CategoryListCreateAPIView.as_view(), name='category-list'),
+    
+    path('categories', 
+         CategoryListCreateAPIView.as_view(), 
+         name='category-list'),
     
     path('categories/<int:pk>', 
          CategoryDetailAPIView.as_view(),
@@ -19,7 +22,8 @@ urlpatterns = [
          PublisherListCreateAPIView.as_view(), 
          name='publisher-list'),
     
-    path('publishers/<int:pk>', PublisherDetailAPIView.as_view(),
+    path('publishers/<int:pk>', 
+         PublisherDetailAPIView.as_view(),
          name='publisher-detail'),
 
     path('contents', 
