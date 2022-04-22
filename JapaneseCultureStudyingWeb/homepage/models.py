@@ -9,19 +9,22 @@ class Category(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+
 class Author(models.Model):
     name = models.CharField(max_length=255, null=False,
                             blank=False, unique=True)
 
     def __str__(self):
         return f'{self.name}'
-    
+
+
 class Publisher(models.Model):
     name = models.CharField(max_length=255, null=False,
                             blank=False, unique=True)
 
     def __str__(self):
         return f'{self.name}'
+
 
 class Content(models.Model):
     # Constant for Status
@@ -33,7 +36,7 @@ class Content(models.Model):
         (POSTED, "Posted"),
         (DELETED, "Deleted"),
     )
-    
+
     # Constant for content types
     CENSORED = "CENSORED"
     UNCENSORED = "UNCENSORED"
@@ -46,13 +49,15 @@ class Content(models.Model):
     slug = models.SlugField(max_length=255,
                             unique=True, null=False,
                             blank=False,)
-    
+
     title = models.CharField(max_length=255)
     thumbnail = models.ImageField(null=False, blank=False,)
     content = models.FileField(blank=True, null=True, default=None)
+    description = models.TextField(null=False, blank=False, default="Udating")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    publisher = models.ManyToManyField(Publisher, blank=False, null=False, related_name="contents")
+    publisher = models.ManyToManyField(
+        Publisher, blank=False, null=False, related_name="contents")
     categories = models.ManyToManyField(Category,
                                         blank=False, null=False,
                                         related_name="categories")
@@ -69,9 +74,9 @@ class Content(models.Model):
                               null=True)
     # Foreign Field
     author = models.ManyToManyField(Author,
-                               related_name="contents")
+                                    related_name="contents")
     publisher = models.ManyToManyField(Publisher,
-                               related_name="contents")
+                                       related_name="contents")
     categories = models.ManyToManyField(Category)
     # Embedded Field
     # comments = models.EmbeddedField(model_container="Comment")
@@ -86,4 +91,3 @@ class Content(models.Model):
 class ContentSeries(models.Model):
     name = models.CharField(max_length=255)
     contents = models.ManyToManyField(Content, related_name="contents")
-
